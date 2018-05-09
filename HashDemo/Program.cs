@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.Security.Cryptography;
 
 namespace HashDemo
 {
@@ -25,6 +26,25 @@ namespace HashDemo
             //~ generate salt from email
             //~ this is secure enough and wont need the additional database column
             var hashSalted2 = HashWithSalt.Generate(email, password);
+            Display(email, password, hashSalted2);
+
+            //salt 
+            //~ prove the resulting md5 hash is unique (when using the same password)
+            //~ assumes the email address is unique
+            email = "nospam@carlpaton.co.za";
+            password = "qwerty";
+            var hashSalted3 = HashWithSalt.Generate(email, password);
+            Display(email, password, hashSalted3);
+
+            Console.Read();
+        }
+
+        private static void Display(string email, string password, string hashSalted)
+        {
+            Console.WriteLine("email={0}", email);
+            Console.WriteLine("password={0}", password);
+            Console.WriteLine("hashSalted={0}", hashSalted);
+            Console.WriteLine("------------------------------------------------------------------");
         }
     }
 }
